@@ -1,8 +1,10 @@
 <?php
 namespace src\Controller;
 
-use src\Model\Article;
 use src\Model\BDD;
+use src\Model\Article;
+use src\Model\Categorie;
+use src\Controller\CategorieController;
 
 class ArticleController extends AbstractController {
 
@@ -13,6 +15,7 @@ class ArticleController extends AbstractController {
             $objArticle->setDescription($_POST["Description"]);
             $objArticle->setDateAjout($_POST["DateAjout"]);
             $objArticle->setAuteur($_POST["Auteur"]);
+            $objArticle->setIdCategorie($_POST["IdCategorie"]);
             //Exécuter l'insertion
             $id = $objArticle->SqlAdd(BDD::getInstance());
             // Redirection
@@ -36,9 +39,11 @@ class ArticleController extends AbstractController {
     public function Show($id){
         $articles = new Article();
         $datas = $articles->SqlGetById(BDD::getInstance(),$id);
-
+        $categories = new Categorie();
+        $data = $categories->SqlGetById(BDD::getInstance(),$datas->getIdCategorie());
         return $this->twig->render("Article/show.html.twig", [
-            "article"=>$datas
+            "article"=>$datas,
+            "categorie"=>$data
         ]);
     }
 
@@ -60,6 +65,7 @@ class ArticleController extends AbstractController {
             $objArticle->setDateAjout($_POST["DateAjout"]);
             $objArticle->setAuteur($_POST["Auteur"]);
             $objArticle->setId($id);
+            $objArticle->setIdCategorie($_POST["IdCategorie"]);
             //Exécuter la mise à jour
             $objArticle->SqlUpdate(BDD::getInstance());
             // Redirection

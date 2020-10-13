@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Ajout de la catégorie :</h1>
+    <p>{{ categorie.Nom }}</p>
+    <p class="card-text">
+        <i class="{{ categorie.Icone }}"></i>
+    </p>
+    <p>{{ categorie.Id }}</p>
+    <p><a href="/Categorie/update/{{ categorie.Id }}"> Modifier cette catégorie </a></p>
+    <p><a href="/Categorie/delete/{{ categorie.Id }}"> Supprimer cette catégorie </a></p>
+
+{% endblock %}

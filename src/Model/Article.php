@@ -9,6 +9,7 @@ class Article {
     private $Auteur;
     private $ImageRepository;
     private $ImageFileName;
+    private $IdCategorie;
 
     /**
      * Cette fonction retourne les X premiers mots de la description
@@ -23,7 +24,7 @@ class Article {
 
     public function SqlAdd(\PDO $bdd){
         try {
-            $requete = $bdd->prepare("INSERT INTO articles (Titre, Description, DateAjout, Auteur, ImageRepository, ImageFilename) VALUES(:Titre, :Description, :DateAjout, :Auteur, :ImageRepository, :ImageFilename)");
+            $requete = $bdd->prepare("INSERT INTO articles (Titre, Description, DateAjout, Auteur, ImageRepository, ImageFilename, IdCategorie) VALUES(:Titre, :Description, :DateAjout, :Auteur, :ImageRepository, :ImageFilename, :IdCategorie)");
 
             $requete->execute([
                 "Titre" => $this->getTitre(),
@@ -32,6 +33,7 @@ class Article {
                 "Auteur" => $this->getAuteur(),
                 "ImageRepository" => $this->getImageRepository(),
                 "ImageFilename" => $this->getImageFileName(),
+                "IdCategorie" => $this->getIdCategorie(),
             ]);
             return $bdd->lastInsertId();
         }catch (\Exception $e){
@@ -42,7 +44,7 @@ class Article {
 
     public function SqlUpdate(\PDO $bdd){
         try {
-            $requete = $bdd->prepare("UPDATE articles set Titre= :Titre, Description = :Description, Auteur = :Auteur, DateAjout = :DateAjout, ImageRepository= :ImageRepository, ImageFilename= :ImageFilename WHERE Id = :Id");
+            $requete = $bdd->prepare("UPDATE articles set Titre= :Titre, Description = :Description, Auteur = :Auteur, DateAjout = :DateAjout, ImageRepository= :ImageRepository, ImageFilename= :ImageFilename, IdCategorie:IdCategorie WHERE Id = :Id");
 
             $requete->execute([
                 "Titre" => $this->getTitre(),
@@ -51,6 +53,7 @@ class Article {
                 "Auteur" => $this->getAuteur(),
                 "ImageRepository" => $this->getImageRepository(),
                 "ImageFilename" => $this->getImageFileName(),
+                "IdCategorie" => $this->getIdCategorie(),
                 "Id" => $this->getId()
             ]);
             return "OK";
@@ -221,8 +224,22 @@ class Article {
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIdCategorie()
+    {
+        return $this->IdCategorie;
+    }
 
-
-
+    /**
+     * @param mixed $IdCategorie
+     * @return Article
+     */
+    public function setIdCategorie($IdCategorie)
+    {
+        $this->IdCategorie = $IdCategorie;
+        return $this;
+    }
 
 }

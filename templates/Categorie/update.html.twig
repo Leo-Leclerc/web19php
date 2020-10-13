@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Modification de la catégorie "{{ categorie.Nom }}"</h1>
+    <form method="post">
+        <textearea type="text" name="Titre" value="{{ categorie.Icone }}">
+            <i class="{{ categorie.Icone }}"></i>
+        </textarea>
+        <input type="text" name="Titre" value="{{ categorie.Icone }}">
+        <select name="Nom">
+            {% if categorie.Nom == "Android" %}
+                <option selected>Android</option>
+            {% else %}
+                <option >Android</option>
+            {% endif %}
+
+            {% if categorie.Nom == "Angular" %}
+                <option selected>Angular</option>
+            {% else %}
+                <option >Angular</option>
+            {% endif %}
+
+            {% if categorie.Nom == "Archive" %}
+                <option selected>Archive</option>
+            {% else %}
+                <option >Archive</option>
+            {% endif %}
+
+        </select>
+        <input type="submit" value="Enregistrer les modifications">
+    </form>
+
+{% endblock %}
